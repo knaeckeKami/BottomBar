@@ -342,6 +342,11 @@ public class BottomBarTab extends LinearLayout {
     }
 
     public void setText(String text){
+        if (badge == null) {
+            badge = new BottomBarBadge(getContext());
+            badge.attachToTab(this, badgeBackgroundColor);
+
+        }
         badge.setText(text);
     }
 
