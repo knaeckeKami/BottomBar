@@ -111,14 +111,14 @@ By default, the tabs don't do anything unless you listen for selection events an
 ```java
 public class MainActivity extends Activity {
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
-            public void onTabSelected(@IdRes int tabId) {
+            public void onTabSelected(int tabId) {
                 if (tabId == R.id.tab_favorites) {
                     // The tab with id R.id.tab_favorites was selected,
                     // change your content accordingly.
@@ -134,7 +134,7 @@ If you want to listen for reselection events, here's how you do it:
 ```java
 bottomBar.setOnTabReselectListener(new OnTabReselectListener() {
     @Override
-    public void onTabReSelected(@IdRes int tabId) {
+    public void onTabReSelected(int tabId) {
         if (tabId == R.id.tab_favorites) {
             // The tab with id R.id.tab_favorites was reselected,
             // change your content accordingly.
@@ -150,7 +150,7 @@ If you want to conditionally cancel selection of any tab, you absolutely can. Ju
 ```java
 bottomBar.setTabSelectionInterceptor(new TabSelectionInterceptor() {
     @Override
-    public boolean shouldInterceptTabSelection(@IdRes int oldTabId, @IdRes int newTabId) {
+    public boolean shouldInterceptTabSelection(int oldTabId, int newTabId) {
         if (newTabId == R.id.tab_pro_feature && !userHasProVersion()) {
           startProVersionPurchaseFlow();
           return true;

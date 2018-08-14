@@ -4,18 +4,18 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
-import android.support.annotation.AttrRes;
-import android.support.annotation.ColorInt;
-import android.support.annotation.Dimension;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.Px;
-import android.support.annotation.StyleRes;
+
+
+
+
+
+
+
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.widget.TextView;
 
-import static android.support.annotation.Dimension.DP;
+
 
 /*
  * BottomBar library for Android
@@ -35,19 +35,19 @@ import static android.support.annotation.Dimension.DP;
  */
 class MiscUtils {
 
-    @NonNull protected static TypedValue getTypedValue(@NonNull Context context, @AttrRes int resId) {
+     protected static TypedValue getTypedValue( Context context,  int resId) {
         TypedValue tv = new TypedValue();
         context.getTheme().resolveAttribute(resId, tv, true);
         return tv;
     }
 
-    @ColorInt
-    protected static int getColor(@NonNull Context context, @AttrRes int color) {
+
+    protected static int getColor( Context context,  int color) {
         return getTypedValue(context, color).data;
     }
 
-    @DrawableRes
-    protected static int getDrawableRes(@NonNull Context context, @AttrRes int drawable) {
+
+    protected static int getDrawableRes( Context context,  int drawable) {
         return getTypedValue(context, drawable).resourceId;
     }
 
@@ -58,7 +58,7 @@ class MiscUtils {
      * @param dp      dimension in dps
      * @return dimension in pixels
      */
-    protected static int dpToPixel(@NonNull Context context, @Dimension(unit = DP) float dp) {
+    protected static int dpToPixel( Context context,  float dp) {
         Resources resources = context.getResources();
         DisplayMetrics metrics = resources.getDisplayMetrics();
 
@@ -76,7 +76,7 @@ class MiscUtils {
      * @param px      dimension in pixels
      * @return dimension in dps
      */
-    protected static int pixelToDp(@NonNull Context context, @Px int px) {
+    protected static int pixelToDp( Context context,  int px) {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         return Math.round(px / displayMetrics.density);
     }
@@ -87,7 +87,7 @@ class MiscUtils {
      * @param context Context to get resources and device specific display metrics
      * @return screen width
      */
-    protected static int getScreenWidth(@NonNull Context context) {
+    protected static int getScreenWidth( Context context) {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         return (int) (displayMetrics.widthPixels / displayMetrics.density);
     }
@@ -99,7 +99,7 @@ class MiscUtils {
      * @param resId    a style resource for the text appearance.
      */
     @SuppressWarnings("deprecation")
-    protected static void setTextAppearance(@NonNull TextView textView, @StyleRes int resId) {
+    protected static void setTextAppearance( TextView textView,  int resId) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             textView.setTextAppearance(resId);
         } else {
@@ -113,7 +113,7 @@ class MiscUtils {
      * @param context Context to get the configuration.
      * @return true if the night mode is enabled, otherwise false.
      */
-    protected static boolean isNightMode(@NonNull Context context) {
+    protected static boolean isNightMode( Context context) {
         int currentNightMode = context.getResources().getConfiguration().uiMode
                 & Configuration.UI_MODE_NIGHT_MASK;
         return currentNightMode == Configuration.UI_MODE_NIGHT_YES;

@@ -1,6 +1,6 @@
 package com.roughike.bottombar;
 
-import android.support.annotation.IdRes;
+
 
 /*
  * BottomBar library for Android
@@ -28,5 +28,5 @@ public interface OnTabSelectListener {
      *
      * @param tabId the new visible {@link BottomBarTab}
      */
-    void onTabSelected(@IdRes int tabId);
+    void onTabSelected(int tabId);
 }

@@ -1,6 +1,6 @@
 package com.roughike.bottombar;
 
-import android.support.annotation.IdRes;
+
 
 /*
  * BottomBar library for Android
@@ -26,5 +26,5 @@ public interface OnTabReselectListener {
      *
      * @param tabId the {@link BottomBarTab} that was reselected.
      */
-    void onTabReSelected(@IdRes int tabId);
+    void onTabReSelected(int tabId);
 }
