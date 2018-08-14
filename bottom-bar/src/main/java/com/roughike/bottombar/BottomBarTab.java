@@ -341,6 +341,10 @@ public class BottomBarTab extends LinearLayout {
         }
     }
 
+    public void setText(String text){
+        badge.setText(text);
+    }
+
     public void removeBadge() {
         setBadgeCount(0);
     }
