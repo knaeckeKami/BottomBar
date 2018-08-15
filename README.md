@@ -1,7 +1,10 @@
 # BottomBar
 
-[![Release](https://jitpack.io/v/knaeckeKami/BottomBar.svg]
-(https://jitpack.io/v/knaeckeKami/BottomBar)
+
+
+[![Release](https://jitpack.io/v/knaeckeKami/BottomBar.svg)](https://jitpack.io/#KnaeckeKami/BottomBar)
+
+
 
 <img src="https://raw.githubusercontent.com/roughike/BottomBar/master/graphics/shy-demo.gif" width="30%" /> <img src="https://raw.githubusercontent.com/roughike/BottomBar/master/graphics/shifting-demo.gif" width="30%" /> <img src="https://raw.githubusercontent.com/roughike/BottomBar/master/graphics/screenshot_tablet.png" width="33%" />
 
