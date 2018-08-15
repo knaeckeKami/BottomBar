@@ -345,9 +345,14 @@ public class BottomBarTab extends LinearLayout {
         if (badge == null) {
             badge = new BottomBarBadge(getContext());
             badge.attachToTab(this, badgeBackgroundColor);
+            badge.setCountThreshold(badgeThreshold);
 
         }
         badge.setText(text);
+
+        if (isActive && badgeHidesWhenActive) {
+            badge.hide();
+        }
     }
 
     public void removeBadge() {
