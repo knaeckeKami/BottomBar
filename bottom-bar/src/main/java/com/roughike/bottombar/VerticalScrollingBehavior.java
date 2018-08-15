@@ -2,8 +2,8 @@ package com.roughike.bottombar;
 
 import android.content.Context;
 import android.os.Parcelable;
-import android.support.annotation.IntDef;
-import android.support.annotation.NonNull;
+
+
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.WindowInsetsCompat;
 import android.util.AttributeSet;
@@ -36,7 +36,7 @@ abstract class VerticalScrollingBehavior<V extends View> extends CoordinatorLayo
     }
 
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({ScrollDirection.SCROLL_DIRECTION_UP, ScrollDirection.SCROLL_DIRECTION_DOWN, ScrollDirection.SCROLL_NONE})
+
     @interface ScrollDirection {
         int SCROLL_DIRECTION_UP = 1;
         int SCROLL_DIRECTION_DOWN = -1;
@@ -135,7 +135,7 @@ abstract class VerticalScrollingBehavior<V extends View> extends CoordinatorLayo
         return super.onNestedPreFling(coordinatorLayout, child, target, velocityX, velocityY);
     }
 
-    @NonNull
+
     @Override
     public WindowInsetsCompat onApplyWindowInsets(CoordinatorLayout coordinatorLayout, V child, WindowInsetsCompat insets) {
         return super.onApplyWindowInsets(coordinatorLayout, child, insets);

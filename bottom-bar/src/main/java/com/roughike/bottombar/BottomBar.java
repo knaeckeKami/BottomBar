@@ -12,13 +12,13 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.annotation.ColorInt;
-import android.support.annotation.IdRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
-import android.support.annotation.VisibleForTesting;
-import android.support.annotation.XmlRes;
+
+
+
+
+
+
+
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
@@ -84,6 +84,7 @@ public class BottomBar extends LinearLayout implements View.OnClickListener, Vie
     private boolean showShadow;
     private float shadowElevation;
     private View shadowView;
+    private int badgeThreshold;
 
     private View backgroundOverlay;
     private ViewGroup outerContainer;
@@ -96,13 +97,13 @@ public class BottomBar extends LinearLayout implements View.OnClickListener, Vie
     private int inActiveShiftingItemWidth;
     private int activeShiftingItemWidth;
 
-    @Nullable
+
     private TabSelectionInterceptor tabSelectionInterceptor;
 
-    @Nullable
+
     private OnTabSelectListener onTabSelectListener;
 
-    @Nullable
+
     private OnTabReselectListener onTabReselectListener;
 
     private boolean isComingFromRestoredState;
@@ -122,12 +123,12 @@ public class BottomBar extends LinearLayout implements View.OnClickListener, Vie
         this(context, attrs, 0);
     }
 
-    public BottomBar(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public BottomBar(Context context,  AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs, defStyleAttr, 0);
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+
     public BottomBar(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init(context, attrs, defStyleAttr, defStyleRes);
@@ -170,7 +171,7 @@ public class BottomBar extends LinearLayout implements View.OnClickListener, Vie
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+
     private void init21(Context context) {
         if (showShadow) {
             shadowElevation = getElevation();
@@ -199,7 +200,7 @@ public class BottomBar extends LinearLayout implements View.OnClickListener, Vie
                     isShiftingMode() ? DEFAULT_INACTIVE_SHIFTING_TAB_ALPHA : 1);
             activeTabAlpha = ta.getFloat(R.styleable.BottomBar_bb_activeTabAlpha, 1);
 
-            @ColorInt
+
             int defaultInActiveColor = isShiftingMode() ?
                     Color.WHITE : ContextCompat.getColor(context, R.color.bb_inActiveBottomBarItemColor);
             int defaultActiveColor = isShiftingMode() ? Color.WHITE : primaryColor;
@@ -212,6 +213,7 @@ public class BottomBar extends LinearLayout implements View.OnClickListener, Vie
             titleTextAppearance = ta.getResourceId(R.styleable.BottomBar_bb_titleTextAppearance, 0);
             titleTypeFace = getTypeFaceFromAsset(ta.getString(R.styleable.BottomBar_bb_titleTypeFace));
             showShadow = ta.getBoolean(R.styleable.BottomBar_bb_showShadow, true);
+            badgeThreshold = ta.getInt(R.styleable.BottomBar_bb_badgeThreshold, 99);
         } finally {
             ta.recycle();
         }
@@ -289,7 +291,7 @@ public class BottomBar extends LinearLayout implements View.OnClickListener, Vie
     /**
      * Set the items for the BottomBar from XML Resource.
      */
-    public void setItems(@XmlRes int xmlRes) {
+    public void setItems( int xmlRes) {
         setItems(xmlRes, null);
     }
 
@@ -297,7 +299,7 @@ public class BottomBar extends LinearLayout implements View.OnClickListener, Vie
      * Set the item for the BottomBar from XML Resource with a default configuration
      * for each tab.
      */
-    public void setItems(@XmlRes int xmlRes, BottomBarTab.Config defaultTabConfig) {
+    public void setItems( int xmlRes, BottomBarTab.Config defaultTabConfig) {
         if (xmlRes == 0) {
             throw new RuntimeException("No items specified for the BottomBar!");
         }
@@ -321,6 +323,7 @@ public class BottomBar extends LinearLayout implements View.OnClickListener, Vie
                 .hideBadgeWhenSelected(hideBadgeWhenActive)
                 .titleTextAppearance(titleTextAppearance)
                 .titleTypeFace(titleTypeFace)
+                .setBadgeThreshold(badgeThreshold)
                 .build();
     }
 
@@ -422,7 +425,6 @@ public class BottomBar extends LinearLayout implements View.OnClickListener, Vie
     /**
      * Returns the settings specific for a shy BottomBar.
      *
-     * @throws UnsupportedOperationException, if this BottomBar is not shy.
      */
     public ShySettings getShySettings() {
         if (!isShy()) {
@@ -442,7 +444,7 @@ public class BottomBar extends LinearLayout implements View.OnClickListener, Vie
      *
      * @param interceptor a listener for potentially interrupting changes in tab selection.
      */
-    public void setTabSelectionInterceptor(@NonNull TabSelectionInterceptor interceptor) {
+    public void setTabSelectionInterceptor( TabSelectionInterceptor interceptor) {
         tabSelectionInterceptor = interceptor;
     }
 
@@ -461,7 +463,7 @@ public class BottomBar extends LinearLayout implements View.OnClickListener, Vie
      *
      * @param listener a listener for monitoring changes in tab selection.
      */
-    public void setOnTabSelectListener(@NonNull OnTabSelectListener listener) {
+    public void setOnTabSelectListener( OnTabSelectListener listener) {
         setOnTabSelectListener(listener, true);
     }
 
@@ -474,7 +476,7 @@ public class BottomBar extends LinearLayout implements View.OnClickListener, Vie
      * @param listener            a listener for monitoring changes in tab selection.
      * @param shouldFireInitially whether the listener should be fired the first time it's set.
      */
-    public void setOnTabSelectListener(@NonNull OnTabSelectListener listener, boolean shouldFireInitially) {
+    public void setOnTabSelectListener( OnTabSelectListener listener, boolean shouldFireInitially) {
         onTabSelectListener = listener;
 
         if (shouldFireInitially && getTabCount() > 0) {
@@ -494,7 +496,7 @@ public class BottomBar extends LinearLayout implements View.OnClickListener, Vie
      *
      * @param listener a listener for handling tab reselections.
      */
-    public void setOnTabReselectListener(@NonNull OnTabReselectListener listener) {
+    public void setOnTabReselectListener( OnTabReselectListener listener) {
         onTabReselectListener = listener;
     }
 
@@ -509,7 +511,7 @@ public class BottomBar extends LinearLayout implements View.OnClickListener, Vie
      * Set the default selected to be the tab with the corresponding tab id.
      * By default, the first tab in the container is the default tab.
      */
-    public void setDefaultTab(@IdRes int defaultTabId) {
+    public void setDefaultTab(int defaultTabId) {
         int defaultTabPosition = findPositionForTabWithId(defaultTabId);
         setDefaultTabPosition(defaultTabPosition);
     }
@@ -529,7 +531,7 @@ public class BottomBar extends LinearLayout implements View.OnClickListener, Vie
     /**
      * Select the tab with the corresponding id.
      */
-    public void selectTabWithId(@IdRes int tabResId) {
+    public void selectTabWithId(int tabResId) {
         int tabPosition = findPositionForTabWithId(tabResId);
         selectTabAtPosition(tabPosition);
     }
@@ -593,7 +595,7 @@ public class BottomBar extends LinearLayout implements View.OnClickListener, Vie
     /**
      * Get the resource id for the currently selected tab.
      */
-    @IdRes
+
     public int getCurrentTabId() {
         return getCurrentTab().getId();
     }
@@ -608,14 +610,14 @@ public class BottomBar extends LinearLayout implements View.OnClickListener, Vie
     /**
      * Find the tabs' position in the container by id.
      */
-    public int findPositionForTabWithId(@IdRes int tabId) {
+    public int findPositionForTabWithId(int tabId) {
         return getTabWithId(tabId).getIndexInTabContainer();
     }
 
     /**
      * Find a BottomBarTab with the corresponding id.
      */
-    public BottomBarTab getTabWithId(@IdRes int tabId) {
+    public BottomBarTab getTabWithId(int tabId) {
         return (BottomBarTab) tabContainer.findViewById(tabId);
     }
 
@@ -658,7 +660,7 @@ public class BottomBar extends LinearLayout implements View.OnClickListener, Vie
         });
     }
 
-    public void setInActiveTabColor(@ColorInt int color) {
+    public void setInActiveTabColor( int color) {
         inActiveTabColor = color;
 
         batchPropertyApplier.applyToAllTabs(new BatchTabPropertyApplier.TabPropertyUpdater() {
@@ -672,7 +674,7 @@ public class BottomBar extends LinearLayout implements View.OnClickListener, Vie
     /**
      * Set active color used for selected BottomBarTabs.
      */
-    public void setActiveTabColor(@ColorInt int color) {
+    public void setActiveTabColor( int color) {
         activeTabColor = color;
 
         batchPropertyApplier.applyToAllTabs(new BatchTabPropertyApplier.TabPropertyUpdater() {
@@ -686,7 +688,7 @@ public class BottomBar extends LinearLayout implements View.OnClickListener, Vie
     /**
      * Set background color for the badge.
      */
-    public void setBadgeBackgroundColor(@ColorInt int color) {
+    public void setBadgeBackgroundColor( int color) {
         badgeBackgroundColor = color;
 
         batchPropertyApplier.applyToAllTabs(new BatchTabPropertyApplier.TabPropertyUpdater() {
@@ -857,7 +859,7 @@ public class BottomBar extends LinearLayout implements View.OnClickListener, Vie
         return bundle;
     }
 
-    @VisibleForTesting
+
     Bundle saveState() {
         Bundle outState = new Bundle();
         outState.putInt(STATE_CURRENT_SELECTED_TAB, currentTabPosition);
@@ -876,7 +878,7 @@ public class BottomBar extends LinearLayout implements View.OnClickListener, Vie
         super.onRestoreInstanceState(state);
     }
 
-    @VisibleForTesting
+
     void restoreState(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             isComingFromRestoredState = true;

@@ -1,6 +1,10 @@
 # BottomBar
 
-[![Build Status](https://travis-ci.org/roughike/BottomBar.svg?branch=master)](https://travis-ci.org/roughike/BottomBar) [![Coverage Status](https://coveralls.io/repos/github/roughike/BottomBar/badge.svg?branch=development)](https://coveralls.io/github/roughike/BottomBar?branch=master) [![Download](https://api.bintray.com/packages/roughike/maven/bottom-bar/images/download.svg)](https://bintray.com/roughike/maven/bottom-bar/_latestVersion)
+
+
+[![Release](https://jitpack.io/v/knaeckeKami/BottomBar.svg)](https://jitpack.io/#KnaeckeKami/BottomBar)
+
+
 
 <img src="https://raw.githubusercontent.com/roughike/BottomBar/master/graphics/shy-demo.gif" width="30%" /> <img src="https://raw.githubusercontent.com/roughike/BottomBar/master/graphics/shifting-demo.gif" width="30%" /> <img src="https://raw.githubusercontent.com/roughike/BottomBar/master/graphics/screenshot_tablet.png" width="33%" />
 
@@ -111,14 +115,14 @@ By default, the tabs don't do anything unless you listen for selection events an
 ```java
 public class MainActivity extends Activity {
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
-            public void onTabSelected(@IdRes int tabId) {
+            public void onTabSelected(int tabId) {
                 if (tabId == R.id.tab_favorites) {
                     // The tab with id R.id.tab_favorites was selected,
                     // change your content accordingly.
@@ -134,7 +138,7 @@ If you want to listen for reselection events, here's how you do it:
 ```java
 bottomBar.setOnTabReselectListener(new OnTabReselectListener() {
     @Override
-    public void onTabReSelected(@IdRes int tabId) {
+    public void onTabReSelected(int tabId) {
         if (tabId == R.id.tab_favorites) {
             // The tab with id R.id.tab_favorites was reselected,
             // change your content accordingly.
@@ -150,7 +154,7 @@ If you want to conditionally cancel selection of any tab, you absolutely can. Ju
 ```java
 bottomBar.setTabSelectionInterceptor(new TabSelectionInterceptor() {
     @Override
-    public boolean shouldInterceptTabSelection(@IdRes int oldTabId, @IdRes int newTabId) {
+    public boolean shouldInterceptTabSelection(int oldTabId, int newTabId) {
         if (newTabId == R.id.tab_pro_feature && !userHasProVersion()) {
           startProVersionPurchaseFlow();
           return true;

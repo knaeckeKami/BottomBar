@@ -7,9 +7,9 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.annotation.ColorInt;
-import android.support.annotation.NonNull;
-import android.support.annotation.VisibleForTesting;
+
+
+
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPropertyAnimatorCompat;
 import android.support.v7.widget.AppCompatImageView;
@@ -35,7 +35,7 @@ import android.widget.TextView;
  * limitations under the License.
  */
 public class BottomBarTab extends LinearLayout {
-    @VisibleForTesting
+
     static final String STATE_BADGE_COUNT = "STATE_BADGE_COUNT_FOR_TAB_";
 
     private static final long ANIMATION_DURATION = 150;
@@ -48,7 +48,7 @@ public class BottomBarTab extends LinearLayout {
     private final int eightDps;
     private final int sixteenDps;
 
-    @VisibleForTesting
+
     BottomBarBadge badge;
 
     private Type type = Type.FIXED;
@@ -68,6 +68,7 @@ public class BottomBarTab extends LinearLayout {
     private int indexInContainer;
     private int titleTextAppearanceResId;
     private Typeface titleTypeFace;
+    private int badgeThreshold;
 
     BottomBarTab(Context context) {
         super(context);
@@ -77,7 +78,7 @@ public class BottomBarTab extends LinearLayout {
         sixteenDps = MiscUtils.dpToPixel(context, 16);
     }
 
-    void setConfig(@NonNull Config config) {
+    void setConfig( Config config) {
         setInActiveAlpha(config.inActiveTabAlpha);
         setActiveAlpha(config.activeTabAlpha);
         setInActiveColor(config.inActiveTabColor);
@@ -87,6 +88,7 @@ public class BottomBarTab extends LinearLayout {
         setBadgeHidesWhenActive(config.badgeHidesWhenSelected);
         setTitleTextAppearance(config.titleTextAppearance);
         setTitleTypeface(config.titleTypeFace);
+        setBadgeThreshold(config.badgeThreshold);
     }
 
     void prepareLayout() {
@@ -114,7 +116,7 @@ public class BottomBarTab extends LinearLayout {
         updateCustomTypeface();
     }
 
-    @VisibleForTesting
+
     int getLayoutResource() {
         int layoutResource;
         switch (type) {
@@ -329,6 +331,7 @@ public class BottomBarTab extends LinearLayout {
         if (badge == null) {
             badge = new BottomBarBadge(getContext());
             badge.attachToTab(this, badgeBackgroundColor);
+            badge.setCountThreshold(badgeThreshold);
         }
 
         badge.setCount(count);
@@ -336,6 +339,15 @@ public class BottomBarTab extends LinearLayout {
         if (isActive && badgeHidesWhenActive) {
             badge.hide();
         }
+    }
+
+    public void setText(String text){
+        if (badge == null) {
+            badge = new BottomBarBadge(getContext());
+            badge.attachToTab(this, badgeBackgroundColor);
+
+        }
+        badge.setText(text);
     }
 
     public void removeBadge() {
@@ -379,6 +391,18 @@ public class BottomBarTab extends LinearLayout {
 
     public Typeface getTitleTypeFace() {
         return titleTypeFace;
+    }
+
+    public int getBadgeThreshold() {
+        return badgeThreshold;
+    }
+
+    public void setBadgeThreshold(int badgeThreshold) {
+        this.badgeThreshold = badgeThreshold;
+
+        if(badge != null){
+            badge.setCountThreshold(badgeThreshold);
+        }
     }
 
     void select(boolean animate) {
@@ -610,7 +634,7 @@ public class BottomBarTab extends LinearLayout {
         return super.onSaveInstanceState();
     }
 
-    @VisibleForTesting
+
     Bundle saveState() {
         Bundle outState = new Bundle();
         outState.putInt(STATE_BADGE_COUNT + getIndexInTabContainer(), badge.getCount());
@@ -630,7 +654,7 @@ public class BottomBarTab extends LinearLayout {
         super.onRestoreInstanceState(state);
     }
 
-    @VisibleForTesting
+
     void restoreState(Bundle savedInstanceState) {
         int previousBadgeCount = savedInstanceState.getInt(STATE_BADGE_COUNT + getIndexInTabContainer());
         setBadgeCount(previousBadgeCount);
@@ -650,6 +674,7 @@ public class BottomBarTab extends LinearLayout {
         private final int titleTextAppearance;
         private final Typeface titleTypeFace;
         private boolean badgeHidesWhenSelected = true;
+        private final int badgeThreshold;
 
         private Config(Builder builder) {
             this.inActiveTabAlpha = builder.inActiveTabAlpha;
@@ -661,6 +686,7 @@ public class BottomBarTab extends LinearLayout {
             this.badgeHidesWhenSelected = builder.hidesBadgeWhenSelected;
             this.titleTextAppearance = builder.titleTextAppearance;
             this.titleTypeFace = builder.titleTypeFace;
+            this.badgeThreshold = builder.badgeThreshold;
         }
 
         public static class Builder {
@@ -673,6 +699,7 @@ public class BottomBarTab extends LinearLayout {
             private boolean hidesBadgeWhenSelected = true;
             private int titleTextAppearance;
             private Typeface titleTypeFace;
+            private int badgeThreshold;
 
             public Builder inActiveTabAlpha(float alpha) {
                 this.inActiveTabAlpha = alpha;
@@ -684,22 +711,22 @@ public class BottomBarTab extends LinearLayout {
                 return this;
             }
 
-            public Builder inActiveTabColor(@ColorInt int color) {
+            public Builder inActiveTabColor( int color) {
                 this.inActiveTabColor = color;
                 return this;
             }
 
-            public Builder activeTabColor(@ColorInt int color) {
+            public Builder activeTabColor( int color) {
                 this.activeTabColor = color;
                 return this;
             }
 
-            public Builder barColorWhenSelected(@ColorInt int color) {
+            public Builder barColorWhenSelected( int color) {
                 this.barColorWhenSelected = color;
                 return this;
             }
 
-            public Builder badgeBackgroundColor(@ColorInt int color) {
+            public Builder badgeBackgroundColor( int color) {
                 this.badgeBackgroundColor = color;
                 return this;
             }
@@ -716,6 +743,11 @@ public class BottomBarTab extends LinearLayout {
 
             public Builder titleTypeFace(Typeface titleTypeFace) {
                 this.titleTypeFace = titleTypeFace;
+                return this;
+            }
+
+            public Builder setBadgeThreshold(int badgeThreshold) {
+                this.badgeThreshold = badgeThreshold;
                 return this;
             }
 

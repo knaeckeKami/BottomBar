@@ -1,7 +1,7 @@
 package com.roughike.bottombar;
 
 import android.os.Build;
-import android.support.annotation.NonNull;
+
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewCompat;
@@ -101,7 +101,7 @@ class BottomNavigationBehavior<V extends View> extends VerticalScrollingBehavior
     }
 
 
-    void setHidden(@NonNull  V view, boolean bottomLayoutHidden) {
+    void setHidden(  V view, boolean bottomLayoutHidden) {
         if (!bottomLayoutHidden && hidden) {
             animateOffset(view, defaultOffset);
         } else if (bottomLayoutHidden && !hidden) {
@@ -111,7 +111,7 @@ class BottomNavigationBehavior<V extends View> extends VerticalScrollingBehavior
     }
 
 
-    static <V extends View> BottomNavigationBehavior<V> from(@NonNull V view) {
+    static <V extends View> BottomNavigationBehavior<V> from( V view) {
         ViewGroup.LayoutParams params = view.getLayoutParams();
 
         if (!(params instanceof CoordinatorLayout.LayoutParams)) {

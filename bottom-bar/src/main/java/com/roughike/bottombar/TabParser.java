@@ -3,13 +3,13 @@ package com.roughike.bottombar;
 import android.content.Context;
 import android.content.res.XmlResourceParser;
 import android.graphics.Color;
-import android.support.annotation.CheckResult;
-import android.support.annotation.ColorInt;
-import android.support.annotation.IntRange;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.StringDef;
-import android.support.annotation.XmlRes;
+
+
+
+
+
+
+
 import android.support.v4.content.ContextCompat;
 
 import org.xmlpull.v1.XmlPullParserException;
@@ -54,26 +54,26 @@ class TabParser {
     private static final int COLOR_NOT_SET = -1;
     private static final int RESOURCE_NOT_FOUND = 0;
 
-    @NonNull
+
     private final Context context;
 
-    @NonNull
+
     private final BottomBarTab.Config defaultTabConfig;
 
-    @NonNull
+
     private final XmlResourceParser parser;
 
-    @Nullable
+
     private List<BottomBarTab> tabs = null;
 
-    TabParser(@NonNull Context context, @NonNull BottomBarTab.Config defaultTabConfig, @XmlRes int tabsXmlResId) {
+    TabParser( Context context,  BottomBarTab.Config defaultTabConfig,  int tabsXmlResId) {
         this.context = context;
         this.defaultTabConfig = defaultTabConfig;
         this.parser = context.getResources().getXml(tabsXmlResId);
     }
 
-    @CheckResult
-    @NonNull
+
+
     public List<BottomBarTab> parseTabs() {
         if (tabs == null) {
             tabs = new ArrayList<>(AVG_NUMBER_OF_TABS);
@@ -95,8 +95,8 @@ class TabParser {
         return tabs;
     }
 
-    @NonNull
-    private BottomBarTab parseNewTab(@NonNull XmlResourceParser parser, @IntRange(from = 0) int containerPosition) {
+
+    private BottomBarTab parseNewTab( XmlResourceParser parser,  int containerPosition) {
         BottomBarTab workingTab = tabWithDefaults();
         workingTab.setIndexInContainer(containerPosition);
 
@@ -148,7 +148,7 @@ class TabParser {
         return workingTab;
     }
 
-    @NonNull
+
     private BottomBarTab tabWithDefaults() {
         BottomBarTab tab = new BottomBarTab(context);
         tab.setConfig(defaultTabConfig);
@@ -156,15 +156,15 @@ class TabParser {
         return tab;
     }
 
-    @NonNull
-    private String getTitleValue(@NonNull XmlResourceParser parser, @IntRange(from = 0) int attrIndex) {
+
+    private String getTitleValue( XmlResourceParser parser, int attrIndex) {
         int titleResource = parser.getAttributeResourceValue(attrIndex, 0);
         return titleResource == RESOURCE_NOT_FOUND
                 ? parser.getAttributeValue(attrIndex) : context.getString(titleResource);
     }
 
-    @ColorInt
-    private int getColorValue(@NonNull XmlResourceParser parser, @IntRange(from = 0) int attrIndex) {
+
+    private int getColorValue( XmlResourceParser parser, int attrIndex) {
         int colorResource = parser.getAttributeResourceValue(attrIndex, 0);
 
         if (colorResource == RESOURCE_NOT_FOUND) {
@@ -180,17 +180,6 @@ class TabParser {
     }
 
     @Retention(RetentionPolicy.SOURCE)
-    @StringDef({
-            ID,
-            ICON,
-            TITLE,
-            INACTIVE_COLOR,
-            ACTIVE_COLOR,
-            BAR_COLOR_WHEN_SELECTED,
-            BADGE_BACKGROUND_COLOR,
-            BADGE_HIDES_WHEN_ACTIVE,
-            IS_TITLELESS
-    })
     @interface TabAttribute {
         String ID = "id";
         String ICON = "icon";

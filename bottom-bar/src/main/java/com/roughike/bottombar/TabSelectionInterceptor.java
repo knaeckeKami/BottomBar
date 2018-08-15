@@ -1,6 +1,6 @@
 package com.roughike.bottombar;
 
-import android.support.annotation.IdRes;
+
 
 /*
  * BottomBar library for Android
@@ -29,5 +29,5 @@ public interface TabSelectionInterceptor {
      * @param newTabId the {@link BottomBarTab} that will be switched to
      * @return true if you want to override/stop the tab change, false to continue as normal
      */
-    boolean shouldInterceptTabSelection(@IdRes int oldTabId, @IdRes int newTabId);
+    boolean shouldInterceptTabSelection(int oldTabId,  int newTabId);
 }

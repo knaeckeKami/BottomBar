@@ -3,8 +3,8 @@ package com.roughike.bottombar;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Build;
-import android.support.annotation.IntRange;
-import android.support.annotation.NonNull;
+
+
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.KeyCharacterMap;
@@ -18,20 +18,20 @@ import android.view.WindowManager;
 final class NavbarUtils {
     private static final int RESOURCE_NOT_FOUND = 0;
 
-    @IntRange(from = 0)
-    static int getNavbarHeight(@NonNull Context context) {
+
+    static int getNavbarHeight( Context context) {
         Resources res = context.getResources();
         int navBarIdentifier = res.getIdentifier("navigation_bar_height", "dimen", "android");
         return navBarIdentifier != RESOURCE_NOT_FOUND
                 ? res.getDimensionPixelSize(navBarIdentifier) : 0;
     }
 
-    static boolean shouldDrawBehindNavbar(@NonNull Context context) {
+    static boolean shouldDrawBehindNavbar( Context context) {
         return isPortrait(context)
                 && hasSoftKeys(context);
     }
 
-    private static boolean isPortrait(@NonNull Context context) {
+    private static boolean isPortrait( Context context) {
         Resources res = context.getResources();
         return res.getBoolean(R.bool.bb_bottom_bar_is_portrait_mode);
     }
@@ -39,7 +39,7 @@ final class NavbarUtils {
     /**
      * http://stackoverflow.com/a/14871974
      */
-    private static boolean hasSoftKeys(@NonNull Context context) {
+    private static boolean hasSoftKeys( Context context) {
         boolean hasSoftwareKeys = true;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
